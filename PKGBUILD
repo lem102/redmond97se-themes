@@ -2,8 +2,8 @@ pkgbase=redmond97se-themes
 pkgname=(
   obsidian-pure-icon-theme
   redmond97se-gtk-theme
-  redmond97se-metacity-theme
-  redmond97se-wine-theme
+  # redmond97se-metacity-theme
+  # redmond97se-wine-theme
   redmond97se-xfwm4-theme
 )
 pkgver=2.13
@@ -26,32 +26,53 @@ package_obsidian-pure-icon-theme() {
   conflicts=(obsidian-icon-theme)
 
   mkdir -p "${pkgdir}/usr/share/icons"
-  tar -xvf ./icons/Obsidian_Pure_v2.08.tar.xz -C "${pkgdir}/usr/share/icons"
+  tar -xf ./icons/Obsidian_Pure_v2.08.tar.xz -C "${pkgdir}/usr/share/icons"
   rm ./icons/Obsidian_Pure_v2.08.tar.xz
 }
 
 _package_subthemes() {
   subdir=$1
 
-  declare -a sdirs
-  readarray -t sdirs < \
-    <(find themes/{Old,New}/ -mindepth 3 -maxdepth 5 -name "${subdir}" -type d)
-  for sdir in "${sdirs[@]}"; do
-    tdir="$(echo "${sdir}" | grep -o "/Redmond97 SE [^/]*/${subdir}\$")"
-    mkdir -p "${pkgdir}/usr/share/themes/${tdir}"
-    cp -a "${sdir}"/* "${pkgdir}/usr/share/themes/${tdir}/"
-    #copy over index.theme for gtk theme only
-    if [ "${sdir}" == "gtk-3.0" ]; then
-      install -m0644 "${sdir}/../index.theme" "${pkgdir}/usr/share/themes/${tdir}/../"
-    fi
+  echo "subtheme start"
+  pwd
+
+  tar -xf ./themes/themes-v2.13.tar.xz
+
+  # for each theme
+  # create a corresponding theme directory in /usr/share/themes if not already there
+  # copy the "subdir" into that theme directory
+
+  pushd themes
+
+  for theme_directory in Redmond97*; do
+      if [[ -e "$theme_directory/$subdir" ]]; then
+          echo "loop"
+          mkdir -p "${pkgdir}/usr/share/themes/${theme_directory}"
+          cp -r "$theme_directory/$subdir" "${pkgdir}/usr/share/themes/${theme_directory}"
+      fi
   done
+
+  popd
+
+  # declare -a sdirs
+  # readarray -t sdirs < \
+  #   <(find themes/{Old,New}/ -mindepth 3 -maxdepth 5 -name "${subdir}" -type d)
+  # for sdir in "${sdirs[@]}"; do
+  #   tdir="$(echo "${sdir}" | grep -o "/Redmond97 SE [^/]*/${subdir}\$")"
+  #   mkdir -p "${pkgdir}/usr/share/themes/${tdir}"
+  #   cp -a "${sdir}"/* "${pkgdir}/usr/share/themes/${tdir}/"
+  #   #copy over index.theme for gtk theme only
+  #   if [ "${sdir}" == "gtk-3.0" ]; then
+  #     install -m0644 "${sdir}/../index.theme" "${pkgdir}/usr/share/themes/${tdir}/../"
+  #   fi
+  # done
 }
 
 package_redmond97se-gtk-theme() {
   pkgdesc='Redmond97-SE GTK and GNOME themes'
   optdepends=(obsidian-pure-icon-theme)
   _package_subthemes 'gtk-2.0'
-  _package_subthemes 'gtk-2.0-hidpi'
+  # _package_subthemes 'gtk-2.0-hidpi'
   _package_subthemes 'gtk-3.0'
   _package_subthemes 'gtk-4.0'
 }
