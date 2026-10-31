@@ -1,6 +1,6 @@
 pkgbase = redmond97se-themes
 	pkgdesc = Redmond97-SE themes
-	pkgver = 2.05
+	pkgver = 2.13
 	pkgrel = 1
 	url = https://codeberg.org/Sliver_X/Redmond97-SE
 	arch = any
@@ -9,7 +9,7 @@ pkgbase = redmond97se-themes
 	makedepends = grep
 	makedepends = sed
 	makedepends = tar
-	source = https://codeberg.org/Sliver_X/Redmond97-SE/releases/download/v2.05/Redmond97-SE_v2.05.7z
+	source = https://codeberg.org/Sliver_X/Redmond97-SE/releases/download/v2.13/Redmond97-SE_v2.05.7z
 	sha256sums = 18551c4835a7daa346a29ffe0b28f44d85b7ea003713819f1340abaf453b303a
 
 pkgname = obsidian-pure-icon-theme

@@ -6,15 +6,15 @@ pkgname=(
   redmond97se-wine-theme
   redmond97se-xfwm4-theme
 )
-pkgver=2.05
+pkgver=2.13
 pkgrel=1
 pkgdesc='Redmond97-SE themes'
 arch=('any')
 url='https://codeberg.org/Sliver_X/Redmond97-SE'
 license=('GPL3')
-makedepends=(7zip grep sed tar)
-source=("https://codeberg.org/Sliver_X/Redmond97-SE/releases/download/v${pkgver}/Redmond97-SE_v${pkgver}.7z")
-sha256sums=('18551c4835a7daa346a29ffe0b28f44d85b7ea003713819f1340abaf453b303a')
+makedepends=(grep sed tar)
+source=("https://codeberg.org/Sliver_X/Redmond97-SE/releases/download/v${pkgver}/Redmond97-SE_v${pkgver}.tar.xz")
+sha256sums=('2f814c42abb654096be9e8238ec519cbb3749cf169b0f78e7cbec7474ae28a9b')
 
 prepare() {
   find -type f -executable -exec chmod -x {} \;
@@ -26,9 +26,8 @@ package_obsidian-pure-icon-theme() {
   conflicts=(obsidian-icon-theme)
 
   mkdir -p "${pkgdir}/usr/share/icons"
-  7z x ./icons/Obsidian_Pure.tar.7z
-  tar -xvf ./Obsidian_Pure.tar -C "${pkgdir}/usr/share/icons"
-  rm ./Obsidian_Pure.tar
+  tar -xvf ./icons/Obsidian_Pure_v2.08.tar.xz -C "${pkgdir}/usr/share/icons"
+  rm ./icons/Obsidian_Pure_v2.08.tar.xz
 }
 
 _package_subthemes() {
